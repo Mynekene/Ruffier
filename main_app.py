@@ -62,7 +62,7 @@ class SitsWindow(Screen):
         label1 = Label(text= txt_sits)
         self.button = Button(text='Продовжити')
         self.button.on_press = self.next_window
-        main_layout = BoxLayout()
+        main_layout = BoxLayout(orientation = "vertical", padding = 20, spacing = 30)
         main_layout.add_widget(label1)
         main_layout.add_widget(self.button)
         self.add_widget(main_layout)
@@ -86,7 +86,7 @@ class InputPulseSecond(Screen):
         layout_second_result = BoxLayout()
         layout_first_result.add_widget
 
-        main_layout = BoxLayout()
+        main_layout = BoxLayout(orientation = "vertical", padding = 20, spacing = 30)
         main_layout.add_widget(text)
         main_layout.add_widget(layout_first_result)
         main_layout.add_widget(layout_second_result)
