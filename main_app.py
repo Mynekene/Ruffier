@@ -6,6 +6,13 @@ from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.textinput import TextInput
 from instructions import *
+from seconds import *
+
+def check_int(value):
+    try:
+        return int(value)
+    except:
+        False
 
 class MainWindow(Screen):
     def __init__(self, **kwargs):
@@ -37,6 +44,9 @@ class MainWindow(Screen):
 class InputPulseFirst(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.next_screen = False
+        self.timer = Seconds()
+        self.timer.bind(done = self.sec_finished)
         label1 = Label(text= txt_test1)
         label2 = Label(text='Введіть результат')
         self.first_result = TextInput(multiline= False)
@@ -51,10 +61,23 @@ class InputPulseFirst(Screen):
         main_layout.add_widget(self.button)
         self.add_widget(main_layout)
 
+    def sec_finished(self, *arg):
+        self.next_screen == True
+        self.button.set_disabled(False)
+        self.first_result.set_disabled(False)
+        self.button.text = "Продовжити"
+
     def next_window(self):
-        global first_result
-        first_result = self.first_result.text
-        self.manager.current = "sits"
+        if self.next_screen == False:
+            self.timer.start()
+            self.button.set_disabled(True)
+        else:
+            global first_result
+            first_result = check_int(self.first_result.text)
+            if first_result == False or first_result < 0:
+                self.first_result.text= '0'
+            else:
+                self.manager.current = "sits"
 
 class SitsWindow(Screen):
     def __init__(self, **kwargs):
@@ -84,7 +107,10 @@ class InputPulseSecond(Screen):
 
         layout_first_result = BoxLayout()
         layout_second_result = BoxLayout()
-        layout_first_result.add_widget
+        layout_first_result.add_widget(second_result_label)
+        layout_first_result.add_widget(self.second_result)
+        layout_second_result.add_widget(third_result_label)
+        layout_second_result.add_widget(self.third_result)
 
         main_layout = BoxLayout(orientation = "vertical", padding = 20, spacing = 30)
         main_layout.add_widget(text)

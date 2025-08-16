@@ -56,6 +56,8 @@ def neud_level(age):
         return 3
     elif age >= 15:
         return 4
+    else:
+        
     
 def ruffier_result(r_index, level):
     ''' функція отримує індекс Руф'є та інтерпретує його,
